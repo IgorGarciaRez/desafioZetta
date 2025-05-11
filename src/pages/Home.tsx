@@ -1,81 +1,41 @@
-import React, { useState } from "react"
-import { useEffect } from "react"
-import FlipCardBootstrap from "../components/FlipCard"
-import { useParams } from "react-router-dom"
-import axios from "axios"
+import React from 'react';
 
-export const Home = ()=> {
-    const { id } = useParams();
-
-    const [pokemons, setPokemons] = useState([]);    
-    useEffect(() => {
-        if (id) {
-          getPokemons(parseInt(id)); // Passa o ID da região para pegar os Pokémons
-        }
-      }, [id]);
-
-    const getPokemons = (region: number) => {
-        var endpoints = [];
-        let i = 0;
-        let n = 0;
-        switch (region) {
-            case 1: // Geração I (Kanto)
-              i = 1;
-              n = 151;
-              break;
-            case 2: // Geração II (Johto)
-              i = 152;
-              n = 251;
-              break;
-            case 3: // Geração III (Hoenn)
-              i = 252;
-              n = 386;
-              break;
-            case 4: // Geração IV (Sinnoh)
-              i = 387;
-              n = 493;
-              break;
-            case 5: // Geração V (Unova)
-              i = 494;
-              n = 649;
-              break;
-            case 6: // Geração VI (Kalos)
-              i = 650;
-              n = 721;
-              break;
-            case 7: // Geração VII (Alola)
-              i = 722;
-              n = 809;
-              break;
-            case 8: // Geração VIII (Galar)
-              i = 810;
-              n = 898;
-              break;
-            case 9: // Geração IX (Paldea)
-              i = 899;
-              n = 1012;
-              break;
-            default:
-              return;
-        }
-        for (var index = i; index <= n; index++) {
-            endpoints.push(`https://pokeapi.co/api/v2/pokemon/${index}`);
-        }
-        var response = axios.all(endpoints.map((endpoint) => axios.get(endpoint)))
-            .then((res) => setPokemons(res))
-            .catch((err) => console.log(err));
-    };
-    
-    return (
-        <div>
-            <div className="container">
-                <div className="d-flex flex-wrap justify-content-center mt-5">
-                    {pokemons.map((pokemon) => (
-                        <FlipCardBootstrap key={pokemon.data.name} name={pokemon.data.name} img={pokemon.data.sprites.front_default}/>
-                    ))}
-                </div>
-            </div>            
-        </div>
-        
-    )
-}
+export const Home = () => {
+  return (
+    <div className="container mt-5">
+      <h1 className="text-center">Sobre o PokeSite</h1>
+      <p className="mt-4">
+        Bem-vindo ao PokeSite! Este site foi criado para os fãs de Pokémon que desejam explorar a vasta coleção de Pokémons
+        disponíveis nas diferentes gerações do universo Pokémon. Disponibilizamos todos os pokemons em formato de cartas 
+        (é possível clicar nelas para conseguir um efeito de giro 3d!)
+      </p>
+      <p className="">
+        Foi utilizada a <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokeAPI</a>, uma API pública
+        que fornece dados completos sobre os Pokémons, incluindo nomes, tipos, habilidades e imagens. Através dessa API, 
+        você pode visualizar informações sobre qualquer Pokémon de todas as gerações, de Kanto a Paldea.
+      </p>
+      <p className="">
+        Vale ressaltar que, devido à limitação de requisições que o GitHub pode fazer para carregar imagens, algumas imagens 
+        podem não ser carregadas corretamente. Pedimos desculpas por qualquer inconveniente, mas até o momento não encontrei
+        uma solução para contornar esse erro. As imagens mal carregadas aparecerão com o ícone de pokebola.
+        Uma solução seria baixar todas as imagens para previnir esse erro, mas como esse é um projeto simples decidi que seria 
+        melhor continuar com o github para não precisar de um armazenamento gigante(afinal, são +1000 pokemons).
+      </p>
+      <p className="">
+        Os Pokémons no site são organizados por regiões, o que permite que você explore as gerações em que eles foram
+        introduzidos. As regiões incluem: Kanto, Johto, Hoenn, Sinnoh, Unova, Kalos, Alola, Galar, Paldea.
+      </p>
+      <p className="">
+        Além disso, você pode procurar por um Pokémon específico utilizando seu nome completo.
+      </p>
+      <p className="">
+        O PokeSite foi criado para proporcionar uma experiência divertida e informativa para todos os entusiastas de Pokémon.
+        O objetivo é criar uma plataforma simples, rápida e eficiente para você explorar, aprender e se divertir com a
+        incrível diversidade do universo Pokémon. Espero que você aproveite a jornada!
+      </p>
+      <p className="">
+        Agradecemos sua visita e esperamos que você continue explorando o maravilhoso mundo dos Pokémons!
+      </p>
+    </div>
+  );
+};
